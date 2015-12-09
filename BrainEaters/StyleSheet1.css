@@ -1,0 +1,158 @@
+﻿body {
+}
+canvas {
+    /*border-image: url('Content/wall.jpg') 70 50 round;*/
+    border: 1px solid black;
+}
+.example_path {
+    position: relative;
+    overflow: hidden;
+    width: 530px;
+    height: 30px;
+    border: 3px solid #000;
+}
+
+.exampBlock {
+    position: absolute;
+    background-color: blue;
+    width: 30px;
+    height: 20px;
+    padding-top: 10px;
+    text-align: center;
+    color: #fff;
+    font-size: 10px;
+    white-space: nowrap;
+    left: 10px;
+}
+
+.firstSampleAnimation.ng-hide-add, .firstSampleAnimation.ng-hide-remove {
+    -webkit-transition: 1s ease-in-out opacity;
+    transition: 1s ease-in-out opacity;
+    opacity: 1;
+}
+
+.firstSampleAnimation.ng-hide {
+    opacity: 0;
+}
+
+/* ngRepeat ng-enter animation */ .repeatItem.ng-enter {
+    -webkit-animation: 1s ng-enter-repeat-animation;
+    animation: 1s ng-enter-repeat-animation;
+}
+
+@-webkit-keyframes ng-enter-repeat-animation {
+    from {
+        opacity: 0;
+        color: red;
+    }
+
+    to {
+        opacity: 1;
+        color: black;
+    }
+}
+
+@keyframes ng-enter-repeat-animation {
+    from {
+        opacity: 0;
+        color: red;
+    }
+
+    to {
+        opacity: 1;
+        color: black;
+    }
+}
+
+/* ngRepeat ng-move animation */ .repeatItem.ng-move {
+    -webkit-animation: 1s ng-move-repeat-animation;
+    animation: 1s ng-move-repeat-animation;
+}
+
+@-webkit-keyframes ng-move-repeat-animation {
+    from {
+        opacity: 1;
+        color: black;
+    }
+
+    to {
+        opacity: 0.5;
+        color: blue;
+    }
+}
+
+@keyframes ng-move-repeat-animation {
+    from {
+        opacity: 1;
+        color: black;
+    }
+
+    to {
+        opacity: 0.5;
+        color: blue;
+    }
+}
+/* ngRepeat ng-leave animation */
+
+.repeatItem.ng-leave {
+    -webkit-animation: 1s ng-leave-repeat-animation;
+    animation: 1s ng-leave-repeat-animation;
+}
+
+@-webkit-keyframes ng-leave-repeat-animation {
+    from {
+        opacity: 1;
+        color: black;
+    }
+
+    to {
+        opacity: 0;
+        color: red;
+    }
+}
+
+@keyframes ng-leave-repeat-animation {
+    from {
+        opacity: 1;
+        color: black;
+    }
+
+    to {
+        opacity: 0;
+        color: red;
+    }
+}
+
+
+
+/* ngModel animation */ .inputSample.ng-invalid-add {    -webkit-transition: 1s linear all; transition: 1s linear all;    color: black; }
+.inputSample.ng-invalid {    color: red; }
+.inputSample.ng-invalid-add-active {    color: red; }
+
+
+.customAnimation {
+    background-color: blue;
+    padding: 20px;
+    transition: all linear 1s;
+}
+
+.customClick {
+    background-color: yellow;
+    padding: 40px;
+}
+
+.customAnimation.customClick-add {
+    animation: 1s ng-class-animation;
+}
+
+@keyframes ng-class-animation {
+    from; {
+        background-color: white;
+        border: 1px solid black;
+    }
+
+    to {
+        background-color: black;
+        border: 1px solid white;
+    }
+}

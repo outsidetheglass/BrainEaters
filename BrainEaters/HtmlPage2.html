@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .squareButton {
+                width: 100px;
+                height: 100px;
+                border: 1px solid red;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="content" id="contentOne">
+            <a class="squareButton" id="goButton">GoGoGo!</a>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+
+
+            <!--<canvas onclick="draw(drawVert(45,40), function(p) {return p}), 45, draw(drawHoriz(25,60), function(p) {return p}) " id="myCanvas" width="100" height="150">Canvas</canvas>-->
+
+
+
+            <script>
+			var canvasR = document.createElement('canvas'),
+				cr,
+				parentNode = document.getElementById('contentOne'),
+				defaultOptions = [500, 500, 700, 700],
+				goButton = document.getElementById('goButton');
+
+			canvasR.width  = 1000;
+			canvasR.height = 1000;
+			canvasR.style.zIndex   = 8;
+
+			canvasR.style.border   = "1px solid";
+
+			parentNode.appendChild(canvasR);
+
+			cr = canvasR.getContext("2d");
+			cr.fillStyle = "#000000";
+
+			goButton.addEventListener('click', function(){drawLine(defaultOptions)});
+
+			function drawHoriz(x, y) { cr.fillRect(x, y, 50, 10); }
+			function drawVert(x, y) { cr.fillRect(x, y, 10, 70); }
+
+			//args is an array of [xStart, yStart, xEnd, yEnd]
+			function drawLine(args) {
+				cr.beginPath();
+				if(args[0] && args[1]){
+					cr.moveTo(args[0], args[1]);
+				}
+				cr.lineTo(args[2], args[3]);
+				cr.stroke();
+			};
+
+            </script>
+            </div>
+
+        functions
+        init: creates a new instance of a canvas if one doesn't exist already
+        drawCharacter: takes character object, and iterates over all the lines
+        eraseCharacter: clears ONLY the section bound by the character
+        which means that you'll need to keep track of each character object in a hash table
+        eraseAll: self explanatory... reset button
+        delete: unbinds all events and destroys all objects
+        drawLine
+        drawArc
+        animate: calls drawLine or drawArc as appropriate
+        drawCharacter calls animate with each object in the character array
+        finally: does things like calls angular back
+        drawCharacter: also stores drawn characters in a hashTable
+</body>
+</html>
