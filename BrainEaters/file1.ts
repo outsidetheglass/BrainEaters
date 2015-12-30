@@ -1,8 +1,14 @@
-﻿//create the canvas
+//create the canvas
 let canvas = (<HTMLCanvasElement>document.getElementById('myCanvas'));
 //create our grid using a constant that we can grab from anywhere without being able to change it
 const grid = 110;
 let cx = canvas.getContext("2d");
+var zomImage = new Image();
+var wallImage = new Image();
+var heroImage = new Image();
+zomImage.src = '/Content/zombie.jpg';
+wallImage.src = '/Content/wall.jpg';
+heroImage.src = '/Content/heroine.jpg';
 let random = Math.floor(Math.random() * grid);
 $('#endGame').hide();
 let player: Player;
@@ -23,31 +29,21 @@ class Player {
             this.updateCoord(this.index);
         }
     }
-
-
     protected updateCoord(index) {
         this.x = index % 10;
-
         this.y = Math.floor(index / 10);
     }
-
     constructor(index: number) {
         this.x = index % 10;
         this.y = Math.floor(index / 10);
         this.index = index;
     }
-
 }
-
-
-
 class Zombie extends Player {
     public x: number
     public y: number
-
     constructor(index) {
         super(index);
-
     }
     public zomAI(targetX, targetY) {
         //if the zombie is above the player
@@ -133,7 +129,6 @@ class Zombie extends Player {
 
     }
 }
-
 //the enum for how we'll access the different spots
 enum fullOf {
     empty,
@@ -141,50 +136,36 @@ enum fullOf {
     zombie,
     wall,
 }
-
 //loop drawing data manipulation, mani, draw, mani, draw
 fillSpot();
 let numOfZoms = 1;
 doTheZomThing();
-setInterval(() => {
-    if (numOfZoms <= 10) {
-        doTheZomThing();
-    }
-}, 800);
-
+let makeZoms = window.setInterval(doTheZomThing, 3000);
 //while (true) {
 //    //updateGame();
 //}
-
 //this draws each box in the board
 function drawing() {
     //draws the rows of the board
-
     for (let y = 0; y < 11; y++) {
         //draws the rows one column at a time
         for (let x = 0; x < 10; x++) {
             //selects the index of the array, y*10+x, as relates to our grid, and then fills a rectangle size 50 by 50 into the canvas
             if (arr[y * 10 + x] == fullOf.empty) {
-                cx.fillStyle = "#ffebcd";
+                cx.fillStyle = '#ffffff';
                 cx.fillRect(50 * x, 50 * y, 50, 50);
-
             }
             else if (arr[y * 10 + x] == fullOf.wall) {
-                cx.fillStyle = "#111111";
-                cx.fillRect(50 * x, 50 * y, 50, 50);
+                cx.drawImage(wallImage, 50 * x, 50 * y, 50, 50);
             }
             else if (arr[y * 10 + x] == fullOf.zombie) {
-                cx.fillStyle = "#8b8378";
-                cx.fillRect(50 * x, 50 * y, 50, 50);
+                cx.drawImage(zomImage, 50 * x, 50 * y, 50, 50);
             }
             else if (arr[y * 10 + x] == fullOf.hero) {
-                cx.fillStyle = "#00bfff";
-                cx.fillRect(50 * x, 50 * y, 50, 50);
+                cx.drawImage(heroImage, 50 * x, 50 * y, 50, 50);
             }
         }
     }
-
-
 }
 //fills a box that was made in the drawing function with an enum
 function fillSpot() {
@@ -193,12 +174,9 @@ function fillSpot() {
     player = new Player(spawnSpot);
     for (let y = 0; y < 11; y++) {
         for (let x = 0; x < 10; x++) {
-
             if (spawnSpot == (y * 10 + x)) {
                 arr.push(fullOf.hero);
             }
-
-
             else if ((y + 1) % 2 == 0) {
                 let chance = Math.floor(Math.random() * 14);
                 //randomly spawn walls
@@ -209,30 +187,24 @@ function fillSpot() {
                     arr.push(fullOf.empty);
                 }
             } else {
-
                 arr.push(fullOf.empty);
             }
             //spawn ze zoms
-            
-
-           
         }
     }
-
 }
-
-//about zombie creation, calm down it's not dancing.
+//about zombie creation
 function doTheZomThing() {
-
     let zomSpawn;
-    do {
-        zomSpawn = Math.floor(Math.random() * 109);
-    } while (arr[zomSpawn] != fullOf.empty) {
-        arr[zomSpawn] = (fullOf.zombie);
-        zom.push(new Zombie(zomSpawn));
+    if (numOfZoms <= 10) {
+        do {
+            zomSpawn = 0;
+        } while (arr[zomSpawn] != fullOf.empty) {
+            arr[zomSpawn] = (fullOf.zombie);
+            zom.push(new Zombie(zomSpawn));
+        }
+        numOfZoms += 1;
     }
-
-    numOfZoms += 1;
 }
 drawing();
 
@@ -241,7 +213,6 @@ const down = 10;
 const left = -1;
 const right = 1;
 let buttonHandler = window.onkeydown = (e) => {
-
     heroMoves(e);
 };
 let leftState = false;
@@ -256,11 +227,9 @@ function heroMoves(sender) {
         case 37:
             leftState = true;
             break;
-
         case 39:
             rightState = true;
             break;
-
         case 40:
             downState = true;
             break;
@@ -299,7 +268,7 @@ setInterval(() => {
             zom[r].zomAI(player.x, player.y);
         }
     }
-}, 200)
+}, 500)
 
 function endGame() {
     cx.globalAlpha = 0.5;
